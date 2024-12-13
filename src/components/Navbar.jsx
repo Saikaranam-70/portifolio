@@ -139,11 +139,7 @@ function NavBar() {
 
   useEffect(() => {
     function scrollHandler() {
-      if (window.scrollY >= 20) {
-        updateNavbar(true);
-      } else {
-        updateNavbar(false);
-      }
+      updateNavbar(window.scrollY >= 20);
     }
 
     window.addEventListener("scroll", scrollHandler);
@@ -152,6 +148,9 @@ function NavBar() {
       window.removeEventListener("scroll", scrollHandler);
     };
   }, []);
+
+  // Debounce the state update to prevent rapid firing
+  const handleNavClick = () => updateExpanded(false);
 
   return (
     <Navbar
@@ -175,22 +174,22 @@ function NavBar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto" defaultActiveKey="#home">
             <Nav.Item>
-              <Nav.Link as={Link} to="/" onClick={() => updateExpanded(false)}>
+              <Nav.Link as={Link} to="/" onClick={handleNavClick}>
                 <AiOutlineHome style={{ marginBottom: "2px" }} /> Home
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link as={Link} to="/about" onClick={() => updateExpanded(false)}>
+              <Nav.Link as={Link} to="/about" onClick={handleNavClick}>
                 <AiOutlineUser style={{ marginBottom: "2px" }} /> About
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link as={Link} to="/project" onClick={() => updateExpanded(false)}>
+              <Nav.Link as={Link} to="/project" onClick={handleNavClick}>
                 <AiOutlineFundProjectionScreen style={{ marginBottom: "2px" }} /> Projects
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link as={Link} to="/resume" onClick={() => updateExpanded(false)}>
+              <Nav.Link as={Link} to="/resume" onClick={handleNavClick}>
                 <CgFileDocument style={{ marginBottom: "2px" }} /> Resume
               </Nav.Link>
             </Nav.Item>
